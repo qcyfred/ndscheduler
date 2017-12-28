@@ -21,8 +21,8 @@ class Handler(base.BaseHandler):
         """
         now = datetime.utcnow()
         time_range_end = self.get_argument('time_range_end', now.isoformat())
-        ten_minutes_ago = now - timedelta(minutes=10)
-        time_range_start = self.get_argument('time_range_start', ten_minutes_ago.isoformat())
+        one_day_ago = now - timedelta(minutes=60*24)
+        time_range_start = self.get_argument('time_range_start', one_day_ago.isoformat())
 
         logs = self.datastore.get_audit_logs(time_range_start, time_range_end)
         return logs
