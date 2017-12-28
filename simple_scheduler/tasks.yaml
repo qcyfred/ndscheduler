@@ -13,8 +13,8 @@ task2:
   name: 测试任务1
   driver: D
   path_dir: D:/workarea/test/
-  file_name: test.py
-  notes: 这是一个测试任务
+  file_name: test1.py
+  notes: 注意，不能写test.py。因为test本身就是一个包。import进来再调用，不会用到这个test.py，而是系统自带的。
   params:
   finish_exit: True
 
