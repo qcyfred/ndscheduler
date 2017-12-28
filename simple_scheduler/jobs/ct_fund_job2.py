@@ -68,6 +68,9 @@ class CtFundJob2(job.JobBase):
         o.start_task(**task_params)
 
         logger.info(('Task %s has been finished.' % task_name))
+
+        sys.path.remove(env_path)
+
         return [json.dumps(task_dict)]
 
 
