@@ -110,17 +110,31 @@ class JobBase:
                                        hostname=socket.gethostname(), pid=os.getpid(),
                                        description=cls.get_running_description())
             job = cls(job_id, execution_id)
+
+            # 这里要写日志
+
             result = job.run(*args, **kwargs)
             result_json = json.dumps(result, indent=4, sort_keys=True)
+            s = ''
+            if isinstance(result, list):
+                if len(result) == 1:
+                    result_item = json.loads(result[0])
+                    for k, v in result_item.items():
+                        s += '%s: %s\n' % (k, v)
+                    s = s[:-1]
             datastore.update_execution(execution_id, state=constants.EXECUTION_STATUS_SUCCEEDED,
                                        description=cls.get_succeeded_description(result),
-                                       result=result_json)
+                                       result=s)
+            # 这里要写更新execution_results的函数
+            # 这里要写日志
         except Exception as e:
             logger.exception(e)
             datastore.update_execution(execution_id,
                                        state=constants.EXECUTION_STATUS_FAILED,
                                        description=cls.get_failed_description(),
                                        result=cls.get_failed_result())
+            # 这里要写更新execution_results的函数
+            # 这里要写日志
 
     def run(self, *args, **kwargs):
         """The "main" function for a job.
