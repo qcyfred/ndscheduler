@@ -14,12 +14,21 @@ import importlib
 import logging
 import os
 import sys
-
 from ndscheduler import default_settings
+
+def filter_tornado_log(record):
+    if record.name.startswith("tornado.access"):
+        return False
+    return True
 
 logger = logging.getLogger()
 ch = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+logging_filter = logging.Filter()
+logging_filter.filter = filter_tornado_log
+ch.addFilter(logging_filter)
+
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 

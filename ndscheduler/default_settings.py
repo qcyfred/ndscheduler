@@ -72,14 +72,15 @@ DATABASE_CONFIG_DICT = {
 # }
 
 # MySQL
-#
+
 # DATABASE_CLASS = 'ndscheduler.core.datastore.providers.mysql.DatastoreMysql'
 # DATABASE_CONFIG_DICT = {
-#     'user': 'username',
-#     'password': '',
+#     'user': 'root',
+#     'password': 'root',
 #     'hostname': 'localhost',
 #     'port': 3306,
-#     'database': 'scheduler'
+#     'database': 'scheduler',
+#     'charset': 'utf8'
 # }
 
 # ndschedule is based on apscheduler. Here we can customize the apscheduler's main scheduler class

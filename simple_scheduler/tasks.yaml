@@ -1,0 +1,21 @@
+
+task1:
+  name: 日常任务1
+  driver: D
+  path_dir: D:/workarea/github/ct_manager/scripts/
+  file_name: main_run_scheduler.py
+  notes: 清理维护数据库、检查最新财报、同步每日行情、产品数据
+  params:
+  finish_exit: True
+
+
+task2:
+  name: 测试任务1
+  driver: D
+  path_dir: D:/workarea/test/
+  file_name: test.py
+  notes: 这是一个测试任务
+  params:
+  finish_exit: True
+
+

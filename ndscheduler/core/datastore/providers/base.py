@@ -11,6 +11,7 @@ from ndscheduler import constants
 from ndscheduler import settings
 from ndscheduler import utils
 from ndscheduler.core.datastore import tables
+import pandas as pd
 
 
 class DatastoreBase(sched_sqlalchemy.SQLAlchemyJobStore):
@@ -131,11 +132,23 @@ class DatastoreBase(sched_sqlalchemy.SQLAlchemyJobStore):
         :rtype: dict
         """
         utc = dateutil.tz.gettz('UTC')
-        start_time = dateutil.parser.parse(time_range_start).replace(tzinfo=utc)
-        end_time = dateutil.parser.parse(time_range_end).replace(tzinfo=utc)
-        selectable = select('*').where(
-            tables.EXECUTIONS.c.scheduled_time.between(
-                start_time, end_time)).order_by(desc(tables.EXECUTIONS.c.updated_time))
+        # start_time = dateutil.parser.parse(time_range_start).replace(tzinfo=utc)
+        start_time = str(pd.to_datetime(time_range_start))
+        # end_time = dateutil.parser.parse(time_range_end).replace(tzinfo=utc)
+        end_time = str(pd.to_datetime(time_range_end))
+        # selectable = select('*').where(
+        #     tables.EXECUTIONS.c.scheduled_time.between(
+        #         start_time, end_time)).order_by(desc(tables.EXECUTIONS.c.updated_time))
+        selectable = """
+            select * from scheduler_execution 
+            where
+                job_id in (select `id` from scheduler_jobs as job, scheduler_jobauditlog as ja where 
+                            job.`id` = ja.`job_id` and event = 0)
+            and 
+                (scheduled_time between '{start_time}' and '{end_time}')
+            order by scheduled_time desc 
+            ;
+            """.format(start_time=start_time, end_time=end_time)
 
         rows = self.engine.execute(selectable)
 

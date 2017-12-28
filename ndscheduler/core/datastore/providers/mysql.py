@@ -21,9 +21,10 @@ class DatastoreMysql(base.DatastoreBase):
         :rtype: str
         """
 
-        return 'mysql+pymysql://%s:%s@%s:%d/%s' % (
+        return 'mysql+pymysql://%s:%s@%s:%d/%s?charset=%s' % (
             settings.DATABASE_CONFIG_DICT['user'],
             settings.DATABASE_CONFIG_DICT['password'],
             settings.DATABASE_CONFIG_DICT['hostname'],
             settings.DATABASE_CONFIG_DICT['port'],
-            settings.DATABASE_CONFIG_DICT['database'])
+            settings.DATABASE_CONFIG_DICT['database'],
+            settings.DATABASE_CONFIG_DICT['charset'])
