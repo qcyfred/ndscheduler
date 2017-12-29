@@ -69,7 +69,9 @@ class CtFundJob2(job.JobBase):
 
         logger.info(('Task %s has been finished.' % task_name))
 
+        # 删掉刚刚引入的包，确保每次都是最新的
         sys.path.remove(env_path)
+        del o
 
         return [json.dumps(task_dict)]
 
