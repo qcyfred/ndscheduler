@@ -20,7 +20,7 @@ from urllib.parse import unquote
 '''configure the log'''
 import logging
 import logging.handlers
-
+import ctypes
 infile = 'remote_sock_server.log'
 handler = logging.handlers.RotatingFileHandler(infile, mode='a', maxBytes=500*1024*1024, backupCount=3)
 fmt='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
@@ -38,7 +38,11 @@ logger.setLevel(logging.INFO)
 local_ip = '10.180.90.236'
 local_port = 43218
 
-
+# 隐藏窗口
+whnd = ctypes.windll.kernel32.GetConsoleWindow()
+if whnd != 0:
+    ctypes.windll.user32.ShowWindow(whnd, 0)
+    ctypes.windll.kernel32.CloseHandle(whnd)
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((local_ip, local_port))
