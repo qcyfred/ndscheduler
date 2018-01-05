@@ -19,7 +19,7 @@ import json
 import logging
 import logging.handlers
 
-infile = 'mylogs/start_prog.log'
+infile = 'start_prog.log'
 handler = logging.handlers.RotatingFileHandler(infile, mode='a', maxBytes=500*1024*1024, backupCount=3)
 fmt='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
 

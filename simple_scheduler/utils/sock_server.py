@@ -21,7 +21,7 @@ from urllib.parse import unquote
 import logging
 import logging.handlers
 
-infile = 'mylogs/remote_sock_server.log'
+infile = 'remote_sock_server.log'
 handler = logging.handlers.RotatingFileHandler(infile, mode='a', maxBytes=500*1024*1024, backupCount=3)
 fmt='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
 
@@ -70,7 +70,7 @@ while 1:
 
     # 管理员权限验证
     if peer_name[0] in admin_filter.keys():
-        print(params)
+        logger.info(params)
 
         # 1. 运行普通py脚本的msg
         if 'run_py' == msg_type:
