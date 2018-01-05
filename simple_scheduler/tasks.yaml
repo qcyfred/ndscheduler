@@ -19,3 +19,11 @@ task2:
   finish_exit: True
 
 
+task3:
+  name: 日常任务2
+  driver: D
+  path_dir: D:/workarea/github/qcy_pc_proj/drawPlot_qcy/
+  file_name: draw_plot_main.py
+  notes: 生成指数成分股乖离率分布图，保存图片并更新数据库。
+  params:
+  finish_exit: True
