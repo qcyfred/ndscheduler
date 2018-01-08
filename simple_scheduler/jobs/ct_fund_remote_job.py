@@ -42,6 +42,7 @@ class CtFundRemoteJob(job.JobBase):
 
         except Exception as e:
             logger.error(e)
+            raise e
         finally:
             client.close()
 
