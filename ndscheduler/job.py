@@ -136,6 +136,9 @@ class JobBase:
             # 这里要写更新execution_results的函数
             # 这里要写日志
 
+            # 执行失败，在此处发送邮件
+            # TODO: send_email
+
     def run(self, *args, **kwargs):
         """The "main" function for a job.
 
