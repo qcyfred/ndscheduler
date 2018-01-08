@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
-class CtFundRemoteJob(job.JobBase):
+class RemoteJobSock(job.JobBase):
 
     # socket client端
     def send_msg(self, ip_addr, port, msg):
@@ -89,5 +89,5 @@ class CtFundRemoteJob(job.JobBase):
 
 if __name__ == "__main__":
     # You can easily test this job here
-    job = CtFundRemoteJob.create_test_instance()
+    job = RemoteJobSock.create_test_instance()
     job.run()

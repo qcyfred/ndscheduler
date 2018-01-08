@@ -8,7 +8,7 @@ import os
 import json
 
 
-class CtFundJob(job.JobBase):
+class OsSystemJob(job.JobBase):
 
     @classmethod
     def meta_info(cls):
@@ -62,5 +62,5 @@ class CtFundJob(job.JobBase):
 
 if __name__ == "__main__":
     # You can easily test this job here
-    job = CtFundJob.create_test_instance()
+    job = OsSystemJob.create_test_instance()
     job.run()

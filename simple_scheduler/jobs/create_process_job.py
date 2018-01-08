@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
-class CtFundJob2(job.JobBase):
+class CreateProcessJob(job.JobBase):
 
     @classmethod
     def meta_info(cls):
@@ -79,5 +79,5 @@ class CtFundJob2(job.JobBase):
 
 if __name__ == "__main__":
     # You can easily test this job here
-    job = CtFundJob2.create_test_instance()
+    job = CreateProcessJob.create_test_instance()
     job.run()
