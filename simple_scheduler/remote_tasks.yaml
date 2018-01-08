@@ -25,7 +25,7 @@ remote_task2:
   finish_exit: True
 
 
-remote_task2:
+remote_task3:
   name: 远程任务
   remote_ip: 10.180.90.236
   remote_port: 43218
