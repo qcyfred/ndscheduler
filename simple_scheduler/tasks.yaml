@@ -1,6 +1,6 @@
 
 task1:
-  name: 日常任务1
+  name: 同步数据、清理数据库
   driver: D
   path_dir: D:/workarea/github/ct_manager/scripts/
   file_name: main_run_scheduler.py
@@ -20,10 +20,20 @@ task2:
 
 
 task3:
-  name: 日常任务2
+  name: 乖离率分布
   driver: D
   path_dir: D:/workarea/github/qcy_pc_proj/drawPlot_qcy/
   file_name: draw_plot_main.py
   notes: 生成指数成分股乖离率分布图，保存图片并更新数据库。
+  params:
+  finish_exit: True
+
+
+task4:
+  name: 备份数据库
+  driver: D
+  path_dir: D:/workarea/github/daily_scripts/
+  file_name: backup_db.py
+  notes: 备份win server的MariaDB。10.180.10.91。
   params:
   finish_exit: True
