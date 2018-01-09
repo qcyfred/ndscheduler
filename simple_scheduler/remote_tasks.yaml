@@ -38,4 +38,15 @@ remote_task3:
   finish_exit: True
 
 
+remote_task4:
+  name: 远程任务
+  remote_ip: 10.180.90.236
+  remote_port: 43218
+  remote_pc_desc: 秦超逸工作用机。
+  notes: 打开pgAdmin和ramp_check的sql语句。
+  params:
+    msg:
+      msg_type: run_py
+      task_group: 4
+  finish_exit: True
 
