@@ -35,17 +35,16 @@ user32 = windll.user32
 kernel32 = windll.kernel32
 psapi = windll.psapi
 
-param_str = sys.argv[1:][0]
-
-params = json.loads(param_str.replace('$', '"'))
-
-print(params)
 
 path = '软件启动信息.xlsx'
-
 df = pd.read_excel(path)
 
+param_str = sys.argv[1:][0]
+params = json.loads(param_str.replace('$', '"'))
+print(params)
+
 task_group = params.get('task_group', -1)
+
 
 df_to_start = df.query("task_group == @task_group")
 try:
