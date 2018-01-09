@@ -34,6 +34,6 @@ task4:
   driver: D
   path_dir: D:/workarea/github/daily_scripts/
   file_name: backup_db.py
-  notes: 备份win server的MariaDB。10.180.10.91。
+  notes: 备份win server的数据库。10.180.10.91。
   params:
   finish_exit: True
