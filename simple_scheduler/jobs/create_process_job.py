@@ -64,14 +64,18 @@ class CreateProcessJob(job.JobBase):
         sys.path.append(env_path)
 
         # 模块名（文件名以.py结束）
-        o = import_module(task_dict['file_name'].split('.py')[0])
-        o.start_task(**task_params)
+        try:
+            o = import_module(task_dict['file_name'].split('.py')[0])
+            o.start_task(**task_params)
 
-        logger.info(('Task %s has been finished.' % task_name))
+            logger.info(('Task %s has been finished.' % task_name))
 
-        # 删掉刚刚引入的包，确保每次都是最新的
-        sys.path.remove(env_path)
-        del o
+            # 删掉刚刚引入的包，确保每次都是最新的
+            sys.path.remove(env_path)
+            del o
+        except Exception as e:
+            raise e
+            logger.error('Task %s failed. - %s' % (task_name, e))
 
         return [json.dumps(task_dict)]
 

@@ -53,10 +53,12 @@ class OsSystemJob(job.JobBase):
                 driver=task_dict['driver'], path_dir=task_dict['path_dir'], py_file_name=task_dict['file_name'],
                 params=param_json_str)
 
-        status = os.system(command)
+        try:
+            status = os.system(command)
+        except Exception as e:
+            print(e)  # log 写日志
+            raise ValueError(e)
         return [json.dumps(task_dict)]
-        # print(status)
-
 
 
 
