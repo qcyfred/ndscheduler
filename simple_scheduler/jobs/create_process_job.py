@@ -14,7 +14,7 @@ import json
 import logging
 import logging.handlers
 
-infile = 'mylogs/ct_fund_job2.log'
+infile = 'mylogs/create_process.log'
 handler = logging.handlers.RotatingFileHandler(infile, mode='a', maxBytes=500*1024*1024, backupCount=3)
 fmt='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
 
@@ -74,8 +74,8 @@ class CreateProcessJob(job.JobBase):
             sys.path.remove(env_path)
             del o
         except Exception as e:
-            raise e
             logger.error('Task %s failed. - %s' % (task_name, e))
+            raise e
 
         return [json.dumps(task_dict)]
 
