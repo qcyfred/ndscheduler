@@ -211,6 +211,48 @@ class DatastoreBase(sched_sqlalchemy.SQLAlchemyJobStore):
 
         return return_json
 
+    def get_audit_log_by_job_id(self, job_id):
+        """Returns an audit logs.
+
+        :param str time_range_end: ISO for time range ending point.
+        :return: A dictionary of multiple audit logs, e.g.,
+            {
+                'logs': [
+                    {
+                        'job_id': ...
+                        'event': ...
+                        'user': ...
+                        'description': ...
+                    }
+                ]
+            }
+
+            Sorted by created_time.
+        :rtype: dict
+        """
+        sql = """
+               SELECT ja.job_id,
+               ja.job_name,
+               ja.event,
+               se.scheduled_time,
+               se.state,
+               se.hostname,
+               se.description,
+               se.updated_time,
+               se.result
+          FROM scheduler_jobauditlog AS ja,
+               scheduler_execution AS se
+         WHERE ja.job_id = se.job_id AND 
+               ja.job_id = '%s' AND 
+               se.state = 4
+         ORDER BY ja.created_time DESC
+         LIMIT 0, 1;
+
+        """%job_id
+
+        rs = self.engine.execute(sql).fetchall()
+        return rs if len(rs)>0 else []
+
     def _build_audit_log(self, row):
         """Return audit_log from a row of scheduler_auditlog table.
 
