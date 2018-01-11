@@ -1,6 +1,7 @@
 # coding: utf-8
 """A starter to start task.
 version 2.0
+引入py文件后，在nds里面执行。
 """
 from __future__ import print_function
 from __future__ import with_statement
@@ -14,7 +15,7 @@ import json
 import logging
 import logging.handlers
 
-infile = 'mylogs/ct_fund_job2.log'
+infile = 'mylogs/run_in_nds_job.log'
 handler = logging.handlers.RotatingFileHandler(infile, mode='a', maxBytes=500*1024*1024, backupCount=3)
 fmt='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
 
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
-class CreateProcessJob(job.JobBase):
+
+class RunInNdsJob(job.JobBase):
 
     @classmethod
     def meta_info(cls):
@@ -74,8 +76,8 @@ class CreateProcessJob(job.JobBase):
             sys.path.remove(env_path)
             del o
         except Exception as e:
-            raise e
             logger.error('Task %s failed. - %s' % (task_name, e))
+            raise e
 
         return [json.dumps(task_dict)]
 
@@ -83,5 +85,5 @@ class CreateProcessJob(job.JobBase):
 
 if __name__ == "__main__":
     # You can easily test this job here
-    job = CreateProcessJob.create_test_instance()
+    job = RunInNdsJob.create_test_instance()
     job.run()
