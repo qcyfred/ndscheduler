@@ -4,6 +4,9 @@ import json
 import logging
 import os
 import socket
+import yaml
+from simple_scheduler.utils.email_utils import send_email
+import datetime
 
 from ndscheduler import constants
 from ndscheduler import utils
@@ -13,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 
 class JobBase:
-
     def __init__(self, job_id, execution_id):
         self.job_id = job_id
         self.execution_id = execution_id
@@ -125,19 +127,39 @@ class JobBase:
             datastore.update_execution(execution_id, state=constants.EXECUTION_STATUS_SUCCEEDED,
                                        description=cls.get_succeeded_description(result),
                                        result=s)
-            # 这里要写更新execution_results的函数
-            # 这里要写日志
-        except Exception as e:
-            logger.exception(e)
+        except Exception as e1:
+            logger.exception(e1)
             datastore.update_execution(execution_id,
                                        state=constants.EXECUTION_STATUS_FAILED,
                                        description=cls.get_failed_description(),
                                        result=cls.get_failed_result())
+
             # 这里要写更新execution_results的函数
             # 这里要写日志
+            # 从job_id得到job的描述
+            job_audit_log = datastore.get_audit_log_by_job_id(job_id)
+            cols = ['job_id', 'job_name', 'event', 'scheduled_time', 'state', 'hostname', 'description',
+                    'updated_time', 'result']
+            error_msg = ''
+            for row in job_audit_log:
+                for i in range(len(cols)):
+                    error_msg += '<b>%s</b><br/>%s' % (cols[i], row[i])
+                    error_msg += '<br/><br/>'
 
             # 执行失败，在此处发送邮件
             # TODO: send_email
+            try:
+                with open('email_settings.yaml', 'r', encoding='utf-8') as f:
+                    email_settings = yaml.load(f.read())
+            except Exception as e:
+                with open('email_settings.yaml', 'r') as f:
+                    email_settings = yaml.load(f.read())
+
+            email_info = email_settings.get('nds_error_email_settings')
+            email_info['subject'] = '任务执行失败'
+            email_info['content'] = '<b>%s</b><br/><br/><b>%s</b><br/><br/>%s' % (
+            str(datetime.datetime.now())[:19], e1, error_msg)
+            send_email(**email_info)
 
     def run(self, *args, **kwargs):
         """The "main" function for a job.
