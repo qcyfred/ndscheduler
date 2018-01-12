@@ -37,3 +37,13 @@ task4:
   notes: 备份win server的数据库。10.180.10.91。
   params:
   finish_exit: True
+
+
+task5:
+  name: 下载指数当日5分钟k线数据
+  driver: D
+  path_dir: D:/workarea/github/daily_scripts/
+  file_name: download_5min_kdata.py
+  notes: 下载指数当日5分钟k线数据，并存入db_qsite_mysql。10.180.10.91。
+  params:
+  finish_exit: True
