@@ -35,7 +35,7 @@ logger.setLevel(logging.INFO)
 
 
 # IP和端口。注意防火墙。
-local_ip = '10.180.90.236'
+local_ip = '10.180.90.11'
 local_port = 43218
 
 # 隐藏窗口
@@ -51,7 +51,7 @@ server.listen(5)
 admin_filter = {
     'localhost': '本机',
     '127.0.0.1': '本机',
-    '10.180.90.236': '本机',
+    '10.180.90.11': '本机',
     '10.180.10.91': '远程 Windows Server'
 }
 
