@@ -47,3 +47,13 @@ task5:
   notes: 下载指数当日5分钟k线数据，并存入db_qsite_mysql。10.180.10.91。
   params:
   finish_exit: True
+
+
+task6:
+  name: 定期删除ramp中的tick-live数据。
+  driver: D
+  path_dir: D:/workarea/github/ct_manager/scripts/
+  file_name: main_del_live_tick.py
+  notes: 定期删除ramp中3张表的数据。（equity_index_intraday_tick_tmp、 equity_index_intraday_1min_tmp、equity_index_intraday_5min_tmp）
+  params:
+  finish_exit: True
