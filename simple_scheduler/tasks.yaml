@@ -1,59 +1,11 @@
 
 task1:
-  name: 同步数据、清理数据库
+  name: 更新期权合约
   driver: D
-  path_dir: D:/workarea/github/ct_manager/scripts/
-  file_name: main_run_scheduler.py
-  notes: 清理维护数据库、检查最新财报、同步每日行情、产品数据
+  env_path: D:\work\code\ts_dev\ts_server\
+  path_dir: D:\work\code\ts_dev\ts_server\ts_server\scripts
+  file_name: update_opt_contract.py
+  notes: 更新期权合约
   params:
   finish_exit: True
 
-
-task2:
-  name: 测试任务1
-  driver: D
-  path_dir: D:/workarea/test/
-  file_name: test1.py
-  notes: 注意，不能写test.py。因为test本身就是一个包。import进来再调用，不会用到这个test.py，而是系统自带的。
-  params:
-  finish_exit: True
-
-
-task3:
-  name: 乖离率分布
-  driver: D
-  path_dir: D:/workarea/github/qcy_pc_proj/drawPlot_qcy/
-  file_name: draw_plot_main.py
-  notes: 生成指数成分股乖离率分布图，保存图片并更新数据库。
-  params:
-  finish_exit: True
-
-
-task4:
-  name: 备份数据库
-  driver: D
-  path_dir: D:/workarea/github/daily_scripts/
-  file_name: backup_db.py
-  notes: 备份win server的数据库。10.180.10.91。
-  params:
-  finish_exit: True
-
-
-task5:
-  name: 下载指数当日5分钟k线数据
-  driver: D
-  path_dir: D:/workarea/github/daily_scripts/
-  file_name: download_5min_kdata.py
-  notes: 下载指数当日5分钟k线数据，并存入db_qsite_mysql。10.180.10.91。
-  params:
-  finish_exit: True
-
-
-task6:
-  name: 定期删除ramp中的tick-live数据。
-  driver: D
-  path_dir: D:/workarea/github/ct_manager/scripts/
-  file_name: main_del_live_tick.py
-  notes: 定期删除ramp中3张表的数据。（equity_index_intraday_tick_tmp、 equity_index_intraday_1min_tmp、equity_index_intraday_5min_tmp）
-  params:
-  finish_exit: True

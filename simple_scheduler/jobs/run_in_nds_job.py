@@ -16,8 +16,8 @@ import logging
 import logging.handlers
 
 infile = 'mylogs/run_in_nds_job.log'
-handler = logging.handlers.RotatingFileHandler(infile, mode='a', maxBytes=500*1024*1024, backupCount=3)
-fmt='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
+handler = logging.handlers.RotatingFileHandler(infile, mode='a', maxBytes=500 * 1024 * 1024, backupCount=3)
+fmt = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
 
 formatter = logging.Formatter(fmt)
 handler.setFormatter(formatter)
@@ -61,7 +61,9 @@ class RunInNdsJob(job.JobBase):
         if task_params is None:
             task_params = {}
 
-        # 即将启动的任务所在路径（到dir一层）
+        # 即将启动的任务所在路径（到dir一层） --> 好像有缺陷！
+        # 不用安装也可以了！！ 直接引入
+        sys.path.append(task_dict['env_path'])
         env_path = task_dict.get('path_dir')
         sys.path.append(env_path)
 
@@ -74,13 +76,14 @@ class RunInNdsJob(job.JobBase):
 
             # 删掉刚刚引入的包，确保每次都是最新的
             sys.path.remove(env_path)
+            sys.path.remove(task_dict['env_path'])
             del o
+
         except Exception as e:
             logger.error('Task %s failed. - %s' % (task_name, e))
             raise e
 
         return [json.dumps(task_dict)]
-
 
 
 if __name__ == "__main__":

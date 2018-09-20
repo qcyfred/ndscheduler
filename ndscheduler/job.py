@@ -5,9 +5,8 @@ import logging
 import os
 import socket
 import yaml
-from simple_scheduler.utils.email_utils import send_email
 import datetime
-
+from qcy.email_utils.email_utils import send_email
 from ndscheduler import constants
 from ndscheduler import utils
 from ndscheduler.core import scheduler_manager
@@ -148,18 +147,15 @@ class JobBase:
 
             # 执行失败，在此处发送邮件
             # TODO: send_email
-            try:
-                with open('email_settings.yaml', 'r', encoding='utf-8') as f:
-                    email_settings = yaml.load(f.read())
-            except Exception as e:
-                with open('email_settings.yaml', 'r') as f:
-                    email_settings = yaml.load(f.read())
-
-            email_info = email_settings.get('nds_error_email_settings')
+            email_info = dict()
+            email_info['receivers'] = ['chaoyiqin@qq.com']
             email_info['subject'] = '任务执行失败'
+            email_info['images'] = []
+            email_info['attachments'] = []
             email_info['content'] = '<b>%s</b><br/><br/><b>%s</b><br/><br/>%s' % (
             str(datetime.datetime.now())[:19], e1, error_msg)
-            send_email(**email_info)
+            send_email(**email_info) # 发邮件
+
 
     def run(self, *args, **kwargs):
         """The "main" function for a job.

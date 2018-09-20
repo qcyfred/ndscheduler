@@ -139,11 +139,14 @@ class DatastoreBase(sched_sqlalchemy.SQLAlchemyJobStore):
         # selectable = select('*').where(
         #     tables.EXECUTIONS.c.scheduled_time.between(
         #         start_time, end_time)).order_by(desc(tables.EXECUTIONS.c.updated_time))
+
+        # 为什么以前要写 event = 1??
+
         selectable = """
             select * from scheduler_execution 
             where
                 job_id in (select `id` from scheduler_jobs as job, scheduler_jobauditlog as ja where 
-                            job.`id` = ja.`job_id` and event = 0)
+                            job.`id` = ja.`job_id` )
             and 
                 (scheduled_time between '{start_time}' and '{end_time}')
             order by scheduled_time desc 

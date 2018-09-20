@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Settings and configuration for ndscheduler.
 
 This will create a settings module that overrides default
@@ -15,6 +16,7 @@ import logging
 import os
 import sys
 from ndscheduler import default_settings
+from simple_scheduler import settings as user_settings
 
 def filter_tornado_log(record):
     if record.name.startswith("tornado.access"):
@@ -77,19 +79,22 @@ class Settings(object):
                 setattr(self, setting, getattr(default_settings, setting))
 
         # use user-provided settings
+        # 环境变量怎么回事？？
         try:
-            settings_module_path = os.environ[ENVIRONMENT_VARIABLE]
+            # settings_module_path = os.environ[ENVIRONMENT_VARIABLE]
             try:
-                settings_module = importlib.import_module(settings_module_path)
+                # settings_module = importlib.import_module(settings_module_path)
+                settings_module = user_settings
                 for setting in dir(settings_module):
                     if setting == setting.upper():
                         setting_value = getattr(settings_module, setting)
                         setattr(self, setting, setting_value)
             except ImportError as e:
-                error = ImportError(
-                    'Could not import settings "%s" (Is it on sys.path?): %s' %
-                    (settings_module_path, e))
-                logger.warn(error)
+                # error = ImportError(
+                #     'Could not import settings "%s" (Is it on sys.path?): %s' %
+                #     (settings_module_path, e))
+                # logger.warn(error)
+                pass
         except KeyError:
             # NOTE: This is arguably an EnvironmentError, but that causes
             # problems with Python's interactive help.
